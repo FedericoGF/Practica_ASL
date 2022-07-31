@@ -1,0 +1,19 @@
+---
+ - host: RockyAsl,ubuntuasl
+    remote_user: ansible
+    become: yes
+    become_method: sudo
+
+   task:
+
+   - name: actualizar paquetes
+     yum:
+      name: "*"
+      state: latest
+      update_only: yes
+      notify: reiniciar servidor
+    
+     handlers:
+
+      - name: reiniciar servidor
+        reboot:
