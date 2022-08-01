@@ -1,0 +1,21 @@
+---
+- hosts: linux
+  remote_user: administrator
+  become: yes
+  become_method: sudo
+
+  tasks:
+
+  - name: firewall activado con ssh habilitado en red hat
+    firewalld:
+      permanent: yes
+      state: enable
+      port: 22/tcp
+    when: ansible_os_family == "Redhat"
+
+  - name: instalar el paquete ufw en debian
+    apt:
+      name: ufw
+      state: latest
+    when: ansible_os_family == "Debian"
+

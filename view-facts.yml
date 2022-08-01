@@ -1,0 +1,12 @@
+---
+- hosts: linux
+  remote_user: administrator
+  become: yes
+  become_method: sudo
+
+  tasks:
+
+  - name: ver interfaces de red
+    debug:
+      msg: "Interfaces: {{ item }}"
+    loop: "{{ ansible_interfaces }}"

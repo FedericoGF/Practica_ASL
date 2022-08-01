@@ -1,19 +1,28 @@
 ---
- - host: RockyAsl,ubuntuasl
-    remote_user: ansible
-    become: yes
-    become_method: sudo
+- hosts: linux
+  remote_user: administrator
+  become: yes
+  become_method: sudo
 
-   task:
+  tasks:
 
-   - name: actualizar paquetes
-     yum:
+  - name: actualizar paquetes en Red Hat
+    dnf:
       name: "*"
       state: latest
       update_only: yes
-      notify: reiniciar servidor
-    
-     handlers:
+    when: ansible_os_family == "Redhat"
+    notify: reiniciar servidor
 
-      - name: reiniciar servidor
-        reboot:
+  - name: Actualizar paquetes en Debian
+    apt:
+      name: "*"
+      state: latest
+      update_cache: yes
+    when: ansible_os_family == "Debian"
+    notify: reiniciar servidor
+
+  handlers:
+
+  - name: reiniciar servidor
+    reboot:
