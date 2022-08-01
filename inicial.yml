@@ -1,6 +1,6 @@
 ---
 - hosts: linux
-  remote_user: administrator
+  remote_user: ansible
   become: yes
   become_method: sudo
 
